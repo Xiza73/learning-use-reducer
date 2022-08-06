@@ -1,17 +1,14 @@
 import { FormEvent, useState } from "react";
-import { Todo } from "../utils/types";
+import { useTodoContext } from "../apps/Todo/context";
 
-type Props = {
-  onSubmit: ({ title, description }: Todo) => void;
-};
-
-export const CreateTodo = ({ onSubmit }: Props) => {
+const CreateTodo = () => {
+  const { addTodo } = useTodoContext();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit({ title, description });
+    addTodo({ title, description });
     setTitle("");
     setDescription("");
   };
@@ -51,3 +48,5 @@ export const CreateTodo = ({ onSubmit }: Props) => {
     </section>
   );
 };
+
+export default CreateTodo;

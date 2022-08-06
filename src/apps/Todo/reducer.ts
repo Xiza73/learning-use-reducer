@@ -1,5 +1,5 @@
-import { AddTodo, RemoveTodo, ToggleTodo } from "../actions/TodoActions";
-import { TodoAction, TodoState } from "../utils/types";
+import { AddTodo, RemoveTodo, ToggleTodo } from "./actions";
+import { TodoAction, TodoState } from "../../utils/types";
 
 export default (state: TodoState, action: TodoAction) => {
   switch (action?.type) {

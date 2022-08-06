@@ -1,5 +1,5 @@
-import { todoActions } from "../utils/constants";
-import { Todo, TodoAction } from "../utils/types/index";
+import { todoActions } from "../../utils/constants";
+import { Todo, TodoAction } from "../../utils/types/index";
 
 export const AddTodo = (payload?: Todo): TodoAction => ({
   type: todoActions.ADD_TODO,

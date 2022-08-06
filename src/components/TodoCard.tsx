@@ -1,12 +1,13 @@
+import { useTodoContext } from "../apps/Todo/context";
 import { Todo } from "../utils/types";
 
 type Props = {
   todo: Todo;
-  onToggle: (todo: Todo) => void;
-  onRemove: (todo: Todo) => void;
 };
 
-export const TodoCard = ({ todo, onToggle, onRemove }: Props) => {
+const TodoCard = ({ todo }: Props) => {
+  const { toggleTodo, removeTodo } = useTodoContext();
+
   return (
     <li
       key={todo.id}
@@ -16,12 +17,12 @@ export const TodoCard = ({ todo, onToggle, onRemove }: Props) => {
         <input
           type="checkbox"
           checked={todo.toggled}
-          onChange={() => onToggle(todo)}
+          onChange={() => toggleTodo(todo)}
         />
         <span className="ml-2">{todo.title}</span>
       </div>
       <div className="text-right">{todo.description}</div>
-      <button className="text-red-500" onClick={() => onRemove(todo)}>
+      <button className="text-red-500" onClick={() => removeTodo(todo)}>
         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
           <path
             fillRule="evenodd"
@@ -33,3 +34,5 @@ export const TodoCard = ({ todo, onToggle, onRemove }: Props) => {
     </li>
   );
 };
+
+export default TodoCard;
