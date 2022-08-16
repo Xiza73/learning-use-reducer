@@ -2,12 +2,15 @@ import { Todo } from "../utils/types";
 import TodoCard from "./TodoCard";
 import { useTodoContext } from "../apps/Todo/context";
 import { getTodosLength } from "../apps/Todo/selectors";
+import { memo, useEffect } from "react";
 
 export const TodosList = () => {
   const { todos } = useTodoContext();
   const todosLength = getTodosLength(todos);
-  // the component is rendering every time the state changes
-  console.log(todosLength);
+
+  useEffect(() => {
+    console.log("List rendered");
+  });
 
   return (
     <>
@@ -22,3 +25,5 @@ export const TodosList = () => {
     </>
   );
 };
+
+export default memo(TodosList);

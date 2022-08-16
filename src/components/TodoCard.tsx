@@ -1,5 +1,6 @@
 import { useTodoContext } from "../apps/Todo/context";
 import { Todo } from "../utils/types";
+import { memo, useEffect } from "react";
 
 type Props = {
   todo: Todo;
@@ -7,6 +8,11 @@ type Props = {
 
 const TodoCard = ({ todo }: Props) => {
   const { toggleTodo, removeTodo } = useTodoContext();
+
+  // the component is rendering every time the state changes
+  useEffect(() => {
+    console.log(todo.id);
+  });
 
   return (
     <li
@@ -35,4 +41,4 @@ const TodoCard = ({ todo }: Props) => {
   );
 };
 
-export default TodoCard;
+export default memo(TodoCard);

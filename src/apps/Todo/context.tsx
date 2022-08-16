@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useReducer } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useReducer,
+} from "react";
 import { AddTodo, RemoveTodo, ToggleTodo } from "./actions";
 import TodoReducer from "./reducer";
 import { initialState } from "../../utils/fixtures/todos";
@@ -16,7 +22,7 @@ type ContextProps = {
 };
 
 const initialContext: ContextProps = {
-  todos: initialState().todos,
+  ...initialState(),
   addTodo: () => {},
   toggleTodo: () => {},
   removeTodo: () => {},
@@ -24,22 +30,33 @@ const initialContext: ContextProps = {
 
 export const TodoContext = createContext<ContextProps>(initialContext);
 
+export const useTodoContext = (): ContextProps => useContext(TodoContext);
+
 export const TodoProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(TodoReducer, initialState());
 
-  const addTodo = (todo: Todo) => {
-    todo.id = Date.now();
-    todo.toggled = false;
-    dispatch(AddTodo(todo));
-  };
+  const addTodo = useCallback(
+    (todo: Todo) => {
+      todo.id = Date.now();
+      todo.toggled = false;
+      dispatch(AddTodo(todo));
+    },
+    [dispatch]
+  );
 
-  const toggleTodo = (todo: Todo) => {
-    dispatch(ToggleTodo(todo));
-  };
+  const toggleTodo = useCallback(
+    (todo: Todo) => {
+      dispatch(ToggleTodo(todo));
+    },
+    [dispatch]
+  );
 
-  const removeTodo = (todo: Todo) => {
-    dispatch(RemoveTodo(todo));
-  };
+  const removeTodo = useCallback(
+    (todo: Todo) => {
+      dispatch(RemoveTodo(todo));
+    },
+    [dispatch]
+  );
 
   return (
     <TodoContext.Provider value={{ ...state, addTodo, toggleTodo, removeTodo }}>
@@ -47,5 +64,3 @@ export const TodoProvider = ({ children }: Props) => {
     </TodoContext.Provider>
   );
 };
-
-export const useTodoContext = () => useContext(TodoContext);

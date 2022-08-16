@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, memo, useEffect } from "react";
 import { useTodoContext } from "../apps/Todo/context";
 
 const CreateTodo = () => {
@@ -12,6 +12,10 @@ const CreateTodo = () => {
     setTitle("");
     setDescription("");
   };
+
+  useEffect(() => {
+    console.log("CreateTodo rendered");
+  });
 
   return (
     <section className="w-56 h-auto flex justify-center items-center mx-auto mb-10 mt-5">
@@ -49,4 +53,4 @@ const CreateTodo = () => {
   );
 };
 
-export default CreateTodo;
+export default memo(CreateTodo);
